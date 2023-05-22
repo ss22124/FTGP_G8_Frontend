@@ -1,0 +1,43 @@
+{
+  "name": "ftgp_group8",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "typechain": "typechain --target=ethers-v6 ./abi/Platform.json --out-dir ./src/api/types"
+  },
+  "dependencies": {
+    "@metamask/detect-provider": "^2.0.0",
+    "ethers": "^6.4.0",
+    "flowbite": "^1.6.5",
+    "flowbite-react": "^0.4.4",
+    "next": "13.4.3",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-icons": "^4.8.0"
+  },
+  "devDependencies": {
+    "@typechain/ethers-v6": "^0.3.2",
+    "@types/node": "20.2.3",
+    "@types/react": "18.2.6",
+    "@types/react-dom": "18.2.4",
+    "@typescript-eslint/eslint-plugin": "^5.59.6",
+    "@typescript-eslint/parser": "^5.59.6",
+    "autoprefixer": "^10.4.14",
+    "eslint": "8.41.0",
+    "eslint-config-next": "13.4.3",
+    "eslint-config-prettier": "^8.7.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "postcss": "^8.4.23",
+    "prettier": "^2.8.4",
+    "prettier-plugin-tailwindcss": "^0.2.4",
+    "tailwindcss": "^3.3.2",
+    "typechain": "^8.1.1",
+    "typescript": "5.0.4"
+  }
+}
