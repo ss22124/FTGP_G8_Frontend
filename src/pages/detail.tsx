@@ -75,6 +75,7 @@ export default function Detail() {
                             item: i.item,
                             price: i.price,
                             id: i.id,
+                            enableAction: true,
                         };
                     });
                     setUploadGoods(uploadGoods);

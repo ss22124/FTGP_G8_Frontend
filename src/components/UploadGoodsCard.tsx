@@ -52,7 +52,9 @@ export default function UploadGoodsCard(props: {
             </div>
             {props.actionLabel ? (
                 <div className={"flex items-center justify-end"}>
-                    <Button onClick={() => props.onAction?.(props.data)}>{props.actionLabel}</Button>
+                    <Button disabled={!props.data.enableAction} onClick={() => props.onAction?.(props.data)}>
+                        {props.actionLabel}
+                    </Button>
                 </div>
             ) : (
                 <></>

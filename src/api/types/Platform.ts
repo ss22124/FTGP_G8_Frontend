@@ -41,14 +41,36 @@ export declare namespace Exchange {
     Seller: AddressLike;
     item: string;
     price: BigNumberish;
+    id: BytesLike;
   };
 
   export type DealsinfoStructOutput = [
     Buyer: string,
     Seller: string,
     item: string,
-    price: bigint
-  ] & { Buyer: string; Seller: string; item: string; price: bigint };
+    price: bigint,
+    id: string
+  ] & {
+    Buyer: string;
+    Seller: string;
+    item: string;
+    price: bigint;
+    id: string;
+  };
+
+  export type Waiting_listStruct = {
+    seller: AddressLike;
+    buyer: AddressLike;
+    id: BytesLike;
+    item: string;
+  };
+
+  export type Waiting_listStructOutput = [
+    seller: string,
+    buyer: string,
+    id: string,
+    item: string
+  ] & { seller: string; buyer: string; id: string; item: string };
 }
 
 export interface PlatformInterface extends Interface {
@@ -58,6 +80,7 @@ export interface PlatformInterface extends Interface {
       | "cancel"
       | "checkIDExistence"
       | "check_buyer"
+      | "check_status"
       | "confirmation"
       | "dealsinfo"
       | "deleteItem"
@@ -65,6 +88,7 @@ export interface PlatformInterface extends Interface {
       | "getGoodsByItem"
       | "getUserDeals"
       | "getUserSellings"
+      | "get_whether_can_be_cancelled"
       | "getwaitinglist"
       | "record"
       | "uploadgoods"
@@ -80,6 +104,10 @@ export interface PlatformInterface extends Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "check_buyer",
+    values: [BytesLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "check_status",
     values: [BytesLike]
   ): string;
   encodeFunctionData(
@@ -109,6 +137,10 @@ export interface PlatformInterface extends Interface {
   encodeFunctionData(
     functionFragment: "getUserSellings",
     values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "get_whether_can_be_cancelled",
+    values: [BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "getwaitinglist",
@@ -142,6 +174,10 @@ export interface PlatformInterface extends Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "check_status",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "confirmation",
     data: BytesLike
   ): Result;
@@ -161,6 +197,10 @@ export interface PlatformInterface extends Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "getUserSellings",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "get_whether_can_be_cancelled",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -234,20 +274,23 @@ export interface Platform extends BaseContract {
 
   check_buyer: TypedContractMethod<[arg0: BytesLike], [string], "view">;
 
+  check_status: TypedContractMethod<[arg0: BytesLike], [boolean], "view">;
+
   confirmation: TypedContractMethod<
     [_choice: boolean, _GoodsID: BytesLike],
     [void],
-    "payable"
+    "nonpayable"
   >;
 
   dealsinfo: TypedContractMethod<
     [arg0: BigNumberish],
     [
-      [string, string, string, bigint] & {
+      [string, string, string, bigint, string] & {
         Buyer: string;
         Seller: string;
         item: string;
         price: bigint;
+        id: string;
       }
     ],
     "view"
@@ -279,7 +322,17 @@ export interface Platform extends BaseContract {
     "view"
   >;
 
-  getwaitinglist: TypedContractMethod<[], [string[]], "view">;
+  get_whether_can_be_cancelled: TypedContractMethod<
+    [_GoodsID: BytesLike],
+    [boolean],
+    "view"
+  >;
+
+  getwaitinglist: TypedContractMethod<
+    [],
+    [Exchange.Waiting_listStructOutput[]],
+    "view"
+  >;
 
   record: TypedContractMethod<
     [_item: string, _price: BigNumberish],
@@ -315,7 +368,14 @@ export interface Platform extends BaseContract {
 
   waiting_list: TypedContractMethod<
     [arg0: BigNumberish],
-    [[string, string] & { buyer: string; id: string }],
+    [
+      [string, string, string, string] & {
+        seller: string;
+        buyer: string;
+        id: string;
+        item: string;
+      }
+    ],
     "view"
   >;
 
@@ -336,22 +396,26 @@ export interface Platform extends BaseContract {
     nameOrSignature: "check_buyer"
   ): TypedContractMethod<[arg0: BytesLike], [string], "view">;
   getFunction(
+    nameOrSignature: "check_status"
+  ): TypedContractMethod<[arg0: BytesLike], [boolean], "view">;
+  getFunction(
     nameOrSignature: "confirmation"
   ): TypedContractMethod<
     [_choice: boolean, _GoodsID: BytesLike],
     [void],
-    "payable"
+    "nonpayable"
   >;
   getFunction(
     nameOrSignature: "dealsinfo"
   ): TypedContractMethod<
     [arg0: BigNumberish],
     [
-      [string, string, string, bigint] & {
+      [string, string, string, bigint, string] & {
         Buyer: string;
         Seller: string;
         item: string;
         price: bigint;
+        id: string;
       }
     ],
     "view"
@@ -376,8 +440,11 @@ export interface Platform extends BaseContract {
     nameOrSignature: "getUserSellings"
   ): TypedContractMethod<[], [Exchange.UploadGoodsStructOutput[]], "view">;
   getFunction(
+    nameOrSignature: "get_whether_can_be_cancelled"
+  ): TypedContractMethod<[_GoodsID: BytesLike], [boolean], "view">;
+  getFunction(
     nameOrSignature: "getwaitinglist"
-  ): TypedContractMethod<[], [string[]], "view">;
+  ): TypedContractMethod<[], [Exchange.Waiting_listStructOutput[]], "view">;
   getFunction(
     nameOrSignature: "record"
   ): TypedContractMethod<
@@ -417,7 +484,14 @@ export interface Platform extends BaseContract {
     nameOrSignature: "waiting_list"
   ): TypedContractMethod<
     [arg0: BigNumberish],
-    [[string, string] & { buyer: string; id: string }],
+    [
+      [string, string, string, string] & {
+        seller: string;
+        buyer: string;
+        id: string;
+        item: string;
+      }
+    ],
     "view"
   >;
 

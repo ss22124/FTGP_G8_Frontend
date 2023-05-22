@@ -1,17 +1,12 @@
 import { DealsInfo } from "@/api/data";
 import { ethers } from "ethers";
-import { Button } from "flowbite-react";
 import { MdPerson, MdPersonOutline } from "react-icons/md";
 import { FaEthereum } from "react-icons/fa";
 import { findGoodsItem } from "@/utils/items";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function DealsInfoCard(props: {
-    data: DealsInfo;
-    actionLabel?: string;
-    onAction?: (id: string) => void;
-}) {
+export default function DealsInfoCard(props: { data: DealsInfo }) {
     const goodsItem = findGoodsItem(props.data.item);
     const goodsItemUrl = {
         pathname: "/detail",
@@ -50,13 +45,6 @@ export default function DealsInfoCard(props: {
                         </div>
                     </div>
                 </div>
-                {props.actionLabel ? (
-                    <div className={"flex items-center justify-end"}>
-                        <Button onClick={() => props.onAction?.(props.data.item)}>{props.actionLabel}</Button>
-                    </div>
-                ) : (
-                    <></>
-                )}
             </div>
         );
     } else {

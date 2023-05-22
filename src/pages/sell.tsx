@@ -11,33 +11,6 @@ import { FaEthereum } from "react-icons/fa";
 import { connectPlatformContract } from "@/api/api";
 import { useRouter } from "next/router";
 
-// const TEST_UPLOAD_GOODS: UploadGoods[] = [
-//     {
-//         seller: "Seller 1",
-//         item: "item_1",
-//         price: ethers.parseEther("10"),
-//         id: "0x12345678XXX",
-//     },
-//     {
-//         seller: "Seller 2",
-//         item: "item_1",
-//         price: ethers.parseEther("20"),
-//         id: "0x12345678XXX",
-//     },
-//     {
-//         seller: "Seller 3",
-//         item: "item_2",
-//         price: ethers.parseEther("30"),
-//         id: "0x12345678XXX",
-//     },
-//     {
-//         seller: "Seller 4",
-//         item: "item_3",
-//         price: ethers.parseEther("40"),
-//         id: "0x12345678XXX",
-//     },
-// ];
-
 export default function Sell() {
     const metaMask = useMetaMask();
     const router = useRouter();
@@ -51,36 +24,21 @@ export default function Sell() {
                 const contract = await connectPlatformContract();
                 if (contract) {
                     const userGoods = await contract.getUserSellings();
-                    const uploadGoods: UploadGoods[] = userGoods.map((i) => {
-                        return {
-                            seller: i.Seller,
-                            item: i.item,
-                            price: i.price,
-                            id: i.id,
-                        };
-                    });
+                    const uploadGoods: UploadGoods[] = await Promise.all(
+                        userGoods.map(async (i) => {
+                            return {
+                                seller: i.Seller,
+                                item: i.item,
+                                price: i.price,
+                                id: i.id,
+                                enableAction: await contract.get_whether_can_be_cancelled(i.id),
+                            };
+                        })
+                    );
                     setUploadGoods(uploadGoods);
                 }
             };
             asyncFunction().catch(console.log);
-            // const asyncFunction = async () => {
-            //     const contract = await connectPlatformContract();
-            //     if (contract) {
-            //         const userGoods = await contract.getUserSellings();
-            //         const uploadGoods: UploadGoods[] = userGoods.map((i) => {
-            //             return {
-            //                 seller: i.Seller,
-            //                 item: i.item,
-            //                 price: i.price,
-            //                 id: i.id,
-            //             };
-            //         });
-            //         setUploadGoods(uploadGoods);
-            //     }
-            // };
-            // asyncFunction().catch(console.log);
-
-            // setUploadGoods(TEST_UPLOAD_GOODS);
         }
     }, [metaMask.isConnected]);
 

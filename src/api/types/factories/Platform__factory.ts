@@ -73,6 +73,25 @@ const _abi = [
   {
     inputs: [
       {
+        internalType: "bytes32",
+        name: "",
+        type: "bytes32",
+      },
+    ],
+    name: "check_status",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
         internalType: "bool",
         name: "_choice",
         type: "bool",
@@ -85,7 +104,7 @@ const _abi = [
     ],
     name: "confirmation",
     outputs: [],
-    stateMutability: "payable",
+    stateMutability: "nonpayable",
     type: "function",
   },
   {
@@ -117,6 +136,11 @@ const _abi = [
         internalType: "uint256",
         name: "price",
         type: "uint256",
+      },
+      {
+        internalType: "bytes32",
+        name: "id",
+        type: "bytes32",
       },
     ],
     stateMutability: "view",
@@ -237,6 +261,11 @@ const _abi = [
             name: "price",
             type: "uint256",
           },
+          {
+            internalType: "bytes32",
+            name: "id",
+            type: "bytes32",
+          },
         ],
         internalType: "struct Exchange.Dealsinfo[]",
         name: "",
@@ -282,13 +311,54 @@ const _abi = [
     type: "function",
   },
   {
+    inputs: [
+      {
+        internalType: "bytes32",
+        name: "_GoodsID",
+        type: "bytes32",
+      },
+    ],
+    name: "get_whether_can_be_cancelled",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
     inputs: [],
     name: "getwaitinglist",
     outputs: [
       {
-        internalType: "bytes32[]",
+        components: [
+          {
+            internalType: "address payable",
+            name: "seller",
+            type: "address",
+          },
+          {
+            internalType: "address payable",
+            name: "buyer",
+            type: "address",
+          },
+          {
+            internalType: "bytes32",
+            name: "id",
+            type: "bytes32",
+          },
+          {
+            internalType: "string",
+            name: "item",
+            type: "string",
+          },
+        ],
+        internalType: "struct Exchange.Waiting_list[]",
         name: "",
-        type: "bytes32[]",
+        type: "tuple[]",
       },
     ],
     stateMutability: "view",
@@ -392,6 +462,11 @@ const _abi = [
     outputs: [
       {
         internalType: "address payable",
+        name: "seller",
+        type: "address",
+      },
+      {
+        internalType: "address payable",
         name: "buyer",
         type: "address",
       },
@@ -399,6 +474,11 @@ const _abi = [
         internalType: "bytes32",
         name: "id",
         type: "bytes32",
+      },
+      {
+        internalType: "string",
+        name: "item",
+        type: "string",
       },
     ],
     stateMutability: "view",

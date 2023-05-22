@@ -11,6 +11,7 @@ export type UploadGoods = {
     item: string;
     price: bigint;
     id: string;
+    enableAction: boolean;
 };
 
 export type DealsInfo = {
@@ -18,4 +19,12 @@ export type DealsInfo = {
     seller: string;
     item: string;
     price: bigint;
+    id: string;
+};
+
+export type WaitingListGoods = {
+    buyer: string;
+    seller: string;
+    item: string;
+    id: string;
 };
