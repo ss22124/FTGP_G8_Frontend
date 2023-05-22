@@ -3,7 +3,7 @@ import { Button, Dropdown, Navbar } from "flowbite-react";
 import Link from "next/link";
 import { FaUserCircle } from "react-icons/fa";
 import { useRouter } from "next/router";
-import { MdOutlineReceiptLong, MdOutlineSell } from "react-icons/md";
+import { MdAssignment, MdOutlineReceiptLong, MdOutlineSell } from "react-icons/md";
 
 export default function Header() {
     const metaMask = useMetaMask();
@@ -23,6 +23,13 @@ export default function Header() {
                             className={"gap-2"}
                         >
                             Sell
+                        </Dropdown.Item>
+                        <Dropdown.Item
+                            icon={() => <MdAssignment size={18} />}
+                            onClick={async () => router.push("/orders")}
+                            className={"gap-2"}
+                        >
+                            Orders
                         </Dropdown.Item>
                         <Dropdown.Item
                             icon={() => <MdOutlineReceiptLong size={18} />}

@@ -26,5 +26,6 @@ export type WaitingListGoods = {
     buyer: string;
     seller: string;
     item: string;
+    price: bigint;
     id: string;
 };

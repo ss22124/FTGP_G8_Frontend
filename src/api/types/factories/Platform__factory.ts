@@ -355,6 +355,11 @@ const _abi = [
             name: "item",
             type: "string",
           },
+          {
+            internalType: "uint256",
+            name: "price",
+            type: "uint256",
+          },
         ],
         internalType: "struct Exchange.Waiting_list[]",
         name: "",
@@ -362,6 +367,96 @@ const _abi = [
       },
     ],
     stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        components: [
+          {
+            internalType: "address payable",
+            name: "Seller",
+            type: "address",
+          },
+          {
+            internalType: "string",
+            name: "item",
+            type: "string",
+          },
+          {
+            internalType: "uint256",
+            name: "price",
+            type: "uint256",
+          },
+          {
+            internalType: "bytes32",
+            name: "id",
+            type: "bytes32",
+          },
+        ],
+        internalType: "struct Exchange.UploadGoods[]",
+        name: "arr1",
+        type: "tuple[]",
+      },
+      {
+        components: [
+          {
+            internalType: "address payable",
+            name: "Seller",
+            type: "address",
+          },
+          {
+            internalType: "string",
+            name: "item",
+            type: "string",
+          },
+          {
+            internalType: "uint256",
+            name: "price",
+            type: "uint256",
+          },
+          {
+            internalType: "bytes32",
+            name: "id",
+            type: "bytes32",
+          },
+        ],
+        internalType: "struct Exchange.UploadGoods[]",
+        name: "arr2",
+        type: "tuple[]",
+      },
+    ],
+    name: "mergeArrays",
+    outputs: [
+      {
+        components: [
+          {
+            internalType: "address payable",
+            name: "Seller",
+            type: "address",
+          },
+          {
+            internalType: "string",
+            name: "item",
+            type: "string",
+          },
+          {
+            internalType: "uint256",
+            name: "price",
+            type: "uint256",
+          },
+          {
+            internalType: "bytes32",
+            name: "id",
+            type: "bytes32",
+          },
+        ],
+        internalType: "struct Exchange.UploadGoods[]",
+        name: "",
+        type: "tuple[]",
+      },
+    ],
+    stateMutability: "pure",
     type: "function",
   },
   {
@@ -479,6 +574,11 @@ const _abi = [
         internalType: "string",
         name: "item",
         type: "string",
+      },
+      {
+        internalType: "uint256",
+        name: "price",
+        type: "uint256",
       },
     ],
     stateMutability: "view",

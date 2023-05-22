@@ -6,36 +6,8 @@ import { findGoodsItem } from "@/utils/items";
 import Image from "next/image";
 import { GoodsItem, UploadGoods } from "@/api/data";
 import UploadGoodsCard from "@/components/UploadGoodsCard";
-import { ethers } from "ethers";
 import { useMetaMask } from "@/contexts/MetaMaskContext";
 import { connectPlatformContract } from "@/api/api";
-
-// const TEST_UPLOAD_GOODS: UploadGoods[] = [
-//     {
-//         seller: "Seller 1",
-//         item: "item_1",
-//         price: ethers.parseEther("10"),
-//         id: "0x12345678XXX",
-//     },
-//     {
-//         seller: "Seller 2",
-//         item: "item_1",
-//         price: ethers.parseEther("20"),
-//         id: "0x12345678XXX",
-//     },
-//     {
-//         seller: "Seller 3",
-//         item: "item_1",
-//         price: ethers.parseEther("30"),
-//         id: "0x12345678XXX",
-//     },
-//     {
-//         seller: "Seller 4",
-//         item: "item_1",
-//         price: ethers.parseEther("40"),
-//         id: "0x12345678XXX",
-//     },
-// ];
 
 export default function Detail() {
     const metaMask = useMetaMask();
@@ -46,24 +18,6 @@ export default function Detail() {
     useEffect(() => {
         if (metaMask.isConnected && router.isReady) {
             const goodsItem = findGoodsItem(router.query.item as string);
-
-            // const asyncFunction = async () => {
-            //     const contract = await connectPlatformContract();
-            //     if (contract && goodsItem) {
-            //         setGoodsItem(goodsItem);
-            //         const allProducts = await contract.getGoodsByItem(goodsItem.item);
-            //         const uploadGoods: UploadGoods[] = allProducts.map((i) => {
-            //             return {
-            //                 seller: i.Seller,
-            //                 item: i.item,
-            //                 price: i.price,
-            //                 id: i.id,
-            //             };
-            //         });
-            //         setUploadGoods(uploadGoods);
-            //     }
-            // };
-            // asyncFunction().catch(console.log);
             const asyncFunction = async () => {
                 const contract = await connectPlatformContract();
                 if (contract && goodsItem) {
@@ -82,16 +36,6 @@ export default function Detail() {
                 }
             };
             asyncFunction().catch(console.log);
-
-            // if (goodsItem) {
-            //     setGoodsItem(goodsItem);
-            //     setUploadGoods(
-            //         TEST_UPLOAD_GOODS.map((i) => {
-            //             i.item = goodsItem.item;
-            //             return i;
-            //         })
-            //     );
-            // }
         }
     }, [metaMask.isConnected, router]);
 

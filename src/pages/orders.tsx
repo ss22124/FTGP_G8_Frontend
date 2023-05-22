@@ -4,10 +4,13 @@ import { useEffect, useState } from "react";
 import { useMetaMask } from "@/contexts/MetaMaskContext";
 import { MsgDialog } from "@/components/MsgDialog";
 import { connectPlatformContract } from "@/api/api";
+import { WaitingListGoods } from "@/api/data";
+import OrderDealsGoodsCard from "@/components/OrderDealsGoodsCard";
 
-export default function Order() {
+export default function Orders() {
     const metaMask = useMetaMask();
     const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+    const [confirmId, setConfirmId] = useState<string>();
     const [waitingListGoods, setWaitingListGoods] = useState<WaitingListGoods[]>();
 
     useEffect(() => {
@@ -22,6 +25,7 @@ export default function Order() {
                                 buyer: i.buyer,
                                 seller: i.seller,
                                 item: i.item,
+                                price: i.price,
                                 id: i.id,
                             };
                         })
@@ -33,10 +37,19 @@ export default function Order() {
         }
     }, [metaMask.isConnected]);
 
+    const onConfirm = async (choice: boolean) => {
+        const contract = await connectPlatformContract();
+        if (contract && confirmId) {
+            const tx = await contract.confirmation(choice, confirmId);
+            await tx.wait();
+            setShowConfirmDialog(false);
+        }
+    };
+
     return (
         <>
             <Head>
-                <title>Order</title>
+                <title>Orders</title>
             </Head>
             <MsgDialog
                 show={showConfirmDialog}
@@ -50,7 +63,15 @@ export default function Order() {
                     {waitingListGoods ? (
                         <div className={"gird grid-col-1 mx-8 mt-2 w-full space-y-4"}>
                             {waitingListGoods.map((data, i) => (
-                                <DealsInfoCard key={i} data={data} />
+                                <OrderDealsGoodsCard
+                                    key={i}
+                                    data={data}
+                                    actionLabel="Confirm"
+                                    onAction={() => {
+                                        setConfirmId(data.id);
+                                        setShowConfirmDialog(true);
+                                    }}
+                                />
                             ))}
                         </div>
                     ) : (

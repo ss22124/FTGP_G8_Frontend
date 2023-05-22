@@ -1,7 +1,7 @@
 import { getEthersProvider } from "@/api/metamask";
 import { Platform__factory } from "@/api/types";
 
-const CONTRACT_ADDRESS = "0x5992372f81E77213Ed6fd55CE43c0E0B897B9905";
+const CONTRACT_ADDRESS = "0x8bBc5f9028ccD19dEC472475307d038E04B14c55";
 
 export async function connectPlatformContract() {
     const provider = await getEthersProvider();

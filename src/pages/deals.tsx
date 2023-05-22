@@ -3,7 +3,7 @@ import Content from "@/components/Content";
 import { DealsInfo } from "@/api/data";
 import { useEffect, useState } from "react";
 import { useMetaMask } from "@/contexts/MetaMaskContext";
-import DealsInfoCard from "@/components/DealsInfoCard";
+import OrderDealsGoodsCard from "@/components/OrderDealsGoodsCard";
 import { connectPlatformContract } from "@/api/api";
 
 export default function Deals() {
@@ -43,7 +43,7 @@ export default function Deals() {
                     {dealsInfo ? (
                         <div className={"gird grid-col-1 mx-8 mt-2 w-full space-y-4"}>
                             {dealsInfo.map((data, i) => (
-                                <DealsInfoCard key={i} data={data} />
+                                <OrderDealsGoodsCard key={i} data={data} />
                             ))}
                         </div>
                     ) : (

@@ -63,14 +63,22 @@ export declare namespace Exchange {
     buyer: AddressLike;
     id: BytesLike;
     item: string;
+    price: BigNumberish;
   };
 
   export type Waiting_listStructOutput = [
     seller: string,
     buyer: string,
     id: string,
-    item: string
-  ] & { seller: string; buyer: string; id: string; item: string };
+    item: string,
+    price: bigint
+  ] & {
+    seller: string;
+    buyer: string;
+    id: string;
+    item: string;
+    price: bigint;
+  };
 }
 
 export interface PlatformInterface extends Interface {
@@ -90,6 +98,7 @@ export interface PlatformInterface extends Interface {
       | "getUserSellings"
       | "get_whether_can_be_cancelled"
       | "getwaitinglist"
+      | "mergeArrays"
       | "record"
       | "uploadgoods"
       | "waiting_for_trading"
@@ -145,6 +154,10 @@ export interface PlatformInterface extends Interface {
   encodeFunctionData(
     functionFragment: "getwaitinglist",
     values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "mergeArrays",
+    values: [Exchange.UploadGoodsStruct[], Exchange.UploadGoodsStruct[]]
   ): string;
   encodeFunctionData(
     functionFragment: "record",
@@ -205,6 +218,10 @@ export interface PlatformInterface extends Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "getwaitinglist",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "mergeArrays",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "record", data: BytesLike): Result;
@@ -334,6 +351,12 @@ export interface Platform extends BaseContract {
     "view"
   >;
 
+  mergeArrays: TypedContractMethod<
+    [arr1: Exchange.UploadGoodsStruct[], arr2: Exchange.UploadGoodsStruct[]],
+    [Exchange.UploadGoodsStructOutput[]],
+    "view"
+  >;
+
   record: TypedContractMethod<
     [_item: string, _price: BigNumberish],
     [void],
@@ -369,11 +392,12 @@ export interface Platform extends BaseContract {
   waiting_list: TypedContractMethod<
     [arg0: BigNumberish],
     [
-      [string, string, string, string] & {
+      [string, string, string, string, bigint] & {
         seller: string;
         buyer: string;
         id: string;
         item: string;
+        price: bigint;
       }
     ],
     "view"
@@ -446,6 +470,13 @@ export interface Platform extends BaseContract {
     nameOrSignature: "getwaitinglist"
   ): TypedContractMethod<[], [Exchange.Waiting_listStructOutput[]], "view">;
   getFunction(
+    nameOrSignature: "mergeArrays"
+  ): TypedContractMethod<
+    [arr1: Exchange.UploadGoodsStruct[], arr2: Exchange.UploadGoodsStruct[]],
+    [Exchange.UploadGoodsStructOutput[]],
+    "view"
+  >;
+  getFunction(
     nameOrSignature: "record"
   ): TypedContractMethod<
     [_item: string, _price: BigNumberish],
@@ -485,11 +516,12 @@ export interface Platform extends BaseContract {
   ): TypedContractMethod<
     [arg0: BigNumberish],
     [
-      [string, string, string, string] & {
+      [string, string, string, string, bigint] & {
         seller: string;
         buyer: string;
         id: string;
         item: string;
+        price: bigint;
       }
     ],
     "view"
