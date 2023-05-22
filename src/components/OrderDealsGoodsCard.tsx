@@ -1,4 +1,4 @@
-import { DealsInfo } from "@/api/data";
+import { DealsInfo, WaitingListGoods } from "@/api/data";
 import { ethers } from "ethers";
 import { Button } from "flowbite-react";
 import { MdPerson, MdPersonOutline } from "react-icons/md";

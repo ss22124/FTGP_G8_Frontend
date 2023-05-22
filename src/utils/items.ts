@@ -1,5 +1,4 @@
 import { GoodsItem } from "@/api/data";
-import GoodsCover from "@/assets/images/goods.png";
 import Dragon_Lore from "@/assets/images/Dragon_Lore.png";
 import Eye_of_Horus from "@/assets/images/Eye_of_Horus.png";
 import Gold_Arabesque from "@/assets/images/Gold_Arabesque.png";
